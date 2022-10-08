@@ -20,7 +20,7 @@ Component
 
 Core of GUI: Swing AWT (Interface is ugly)
 
-![ContainerArch](/Users/blake/Desktop/java/pictures/ContainerArch.png)
+![ContainerArch](/Users/blake/Desktop/JavaNotes/Java/pictures/ContainerArch.png)
 
 | S.NO | **AWT**                                                      | **Swing**                                                    |
 | :--- | :----------------------------------------------------------- | :----------------------------------------------------------- |
@@ -683,7 +683,7 @@ class KeyFrame extends Frame{
 
 
 
-3.1 
+#### 3.1 Window,Panel
 
 ```java
 package com.hong.gUI.swing_;
@@ -722,6 +722,416 @@ public class JFrame_1 {
 }
 
 ```
+
+
+
+#### 3.2 Dialog
+
+```java
+package com.lijin.demo02;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+//弹窗
+public class TestDialog {
+    public static void main(String[] args) {
+        new Dialog1();
+    }
+}
+//主窗口
+class Dialog1 extends JFrame{
+    public Dialog1(){
+        this.setVisible(true);
+        this.setBounds(100,100,300,300);
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        //Jframe放东西，容器
+        Container container = this.getContentPane();
+        //绝对布局
+        container.setLayout(null);
+        //按钮
+        JButton jButton = new JButton("弹出对话框");//创建
+        jButton.setBounds(30,30,200,50);
+        container.add(jButton);
+        //点击这个按钮的时候，弹出一个弹窗（监听事件）
+        jButton.addActionListener(new AbstractAction() {  //监听器
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //弹窗
+                new Dialog2();
+            }
+        });
+        container.add(jButton);
+    }
+}
+//弹窗的窗口
+class Dialog2 extends JDialog{
+    public Dialog2(){
+        this.setVisible(true);
+        this.setBounds(100,100,500,500);
+        //弹窗中默认有此事件
+        //this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        Container container = this.getContentPane();
+        container.setLayout(null);
+        container.add(new Label("label test"));
+    }
+}
+
+```
+
+
+
+#### 3.3 Label
+
+```java
+package com.lijin.demo03;
+import javax.swing.*;
+import java.awt.*;
+//图标
+public class TestIcon {
+    public static void main(String[] args) {
+        new Icon1(100,100).init();
+    }
+}
+class Icon1 extends JFrame implements Icon{
+    //属性
+    private int width;
+    private int high;
+    public Icon1(){}//无参构造
+    public Icon1(int width,int high){
+        this.width = width;
+        this.high = high;
+    }
+    //方法
+    public void init(){
+        setBounds(100,100,300,300);
+        Icon1 icon1 = new Icon1(15,15);
+        //图标放在标签上，也可以放在按钮上
+        JLabel jLabel = new JLabel("label test",icon1,SwingConstants.CENTER);
+        Container container = getContentPane();
+        container.add(jLabel);
+        this.setVisible(true);
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    }
+    @Override
+    public void paintIcon(Component c, Graphics g, int x, int y) {
+        g.fillOval(x,y,width,high);
+    }
+    @Override
+    public int getIconWidth() {
+        return this.width;
+    }
+    @Override
+    public int getIconHeight() {
+        return this.high;
+    }
+}
+
+```
+
+
+
+#### 3.4 Panel
+
+```java
+package com.lijin.demo04;
+import javax.swing.*;
+import java.awt.*;
+public class TestJPane extends JFrame {
+    public TestJPane()  {
+        Container container = this.getContentPane();
+        container.setLayout(new GridLayout(2,1,10,10));  //间距
+        JPanel jPanel = new JPanel(new GridLayout(1,3));
+        JPanel jPanel1 = new JPanel(new GridLayout(1,3));
+        JPanel jPanel2 = new JPanel(new GridLayout(1,3));
+        JPanel jPanel3 = new JPanel(new GridLayout(1,3));
+        jPanel.add(new JButton("1"));
+        jPanel.add(new JButton("2"));
+        jPanel.add(new JButton("3"));
+        jPanel1.add(new JButton("1"));
+        jPanel1.add(new JButton("2"));
+        jPanel1.add(new JButton("3"));
+        jPanel2.add(new JButton("1"));
+        jPanel2.add(new JButton("2"));
+        jPanel2.add(new JButton("3"));
+        jPanel3.add(new JButton("1"));
+        jPanel3.add(new JButton("2"));
+        jPanel3.add(new JButton("3"));
+        container.add(jPanel);
+        container.add(jPanel1);
+        container.add(jPanel2);
+        container.add(jPanel3);
+        setVisible(true);
+        setBounds(100,100,300,300);
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    }
+    public static void main(String[] args) {
+        new TestJPane();
+    }
+}
+
+```
+
+
+
+##### JScrollPanel
+
+```java
+package com.lijin.demo03;
+import javax.swing.*;
+import java.awt.*;
+import java.net.URL;
+public class TestImageIcon extends JFrame {
+    public static void main(String[] args) {
+        new TestImageIcon();
+    }
+    public TestImageIcon()  {
+        //获取图片地址     url是一个具体的地址
+        JLabel jLabel = new JLabel("ImageIcon");
+        URL url = TestImageIcon.class.getResource("1.jpg");//获取当前类下的资源
+        ImageIcon imageIcon = new ImageIcon(url);//命名避免冲突
+        jLabel.setIcon(imageIcon);//图片饭在jLabel上
+        jLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        Container container = getContentPane();
+        container.add(jLabel);
+        setVisible(true);
+        setBounds(100,100,300,300);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    }
+}
+
+```
+
+
+
+#### 3.5 Button
+
+```java
+package com.lijin.demo05;
+import com.lijin.demo03.TestImageIcon;
+import javax.swing.*;
+import java.awt.*;
+import java.net.URL;
+//按钮
+public class TestJButton extends JFrame {
+    public TestJButton() {
+        Container container = this.getContentPane();
+        //将图片变为一个图标
+        URL url = TestJButton.class.getResource("1.jpg");
+        ImageIcon icon = new ImageIcon(url);
+        //把图片放在按钮上
+        JButton jButton = new JButton();
+        jButton.setIcon(icon);
+        jButton.setToolTipText("图片按钮");
+        container.add(jButton);
+        setVisible(true);
+        setBounds(100,100,300,300);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    }
+    public static void main(String[] args) {
+        new TestJButton();
+    }
+}
+```
+
+Single Choice
+
+
+
+```java
+package com.lijin.demo05;
+import javax.swing.*;
+import java.awt.*;
+import java.net.URL;
+//多选
+public class TestJButton1 extends JFrame {
+    public TestJButton1() {
+        Container container = this.getContentPane();
+        //单选框
+        JRadioButton jRadioButton1 = new JRadioButton("1");
+        JRadioButton jRadioButton2 = new JRadioButton("2");
+        JRadioButton jRadioButton3 = new JRadioButton("3");
+        //由于单选框只能选一个所以我们要分组，一个组中只能选一个
+        ButtonGroup group = new ButtonGroup();
+        group.add(jRadioButton1);
+        group.add(jRadioButton2);
+        group.add(jRadioButton3);
+        container.add(jRadioButton1,BorderLayout.CENTER);
+        container.add(jRadioButton2,BorderLayout.NORTH);
+        container.add(jRadioButton3,BorderLayout.SOUTH);
+        setVisible(true);
+        setBounds(100,100,300,300);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    }
+    public static void main(String[] args) {
+        new TestJButton1();
+    }
+}
+```
+
+
+
+multi choice
+
+```java
+package com.lijin.demo05;
+import javax.swing.*;
+import java.awt.*;
+//多选框
+public class TestJButton2 extends JFrame {
+    public TestJButton2() {
+        Container container = this.getContentPane();
+        JCheckBox jCheckBox = new JCheckBox("1");
+        JCheckBox jCheckBox1 = new JCheckBox("2");
+        container.add(jCheckBox,BorderLayout.SOUTH);
+        container.add(jCheckBox1,BorderLayout.NORTH);
+        setVisible(true);
+        setBounds(100,100,300,300);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    }
+    public static void main(String[] args) {
+        new TestJButton2();
+    }
+}
+```
+
+
+
+#### 3.6 Menu
+
+##### Drop Down menu
+
+```java
+package com.lijin.demo06;
+import javax.swing.*;
+import java.awt.*;
+//下拉框
+public class TestJCombobox extends JFrame {
+    public TestJCombobox() {
+        Container container = this.getContentPane();
+        JComboBox jComboBox = new JComboBox();
+        jComboBox.addItem(null);
+        jComboBox.addItem("正在上映");
+        jComboBox.addItem("已下架");
+        jComboBox.addItem("即将上映");
+        container.add(jComboBox);
+        this.setBounds(100,100,300,300);
+        this.setBackground(Color.CYAN);
+        setVisible(true);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    }
+    public static void main(String[] args) {
+        new TestJCombobox();
+    }
+}
+```
+
+##### List
+
+```java
+package com.lijin.demo06;
+import javax.swing.*;
+import java.awt.*;
+//列表框
+public class TestJCombobox1 extends JFrame {
+    public TestJCombobox1() {
+        Container container = this.getContentPane();
+        //生成列表内容
+        String[] contents = {"1","2","3"};
+        //列表需要放入内容
+        JList jList = new JList(contents);
+        container.add(jList);
+        setVisible(true);
+        setBounds(100,100,300,300);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    }
+    public static void main(String[] args) {
+        new TestJCombobox1();
+    }
+}
+```
+
+#### 3.7 TextField
+
+Textfield
+
+```java
+package com.lijin.demo06;
+import javax.swing.*;
+import java.awt.*;
+//文本框
+public class TestText1 extends JFrame {
+    public TestText1() {
+        Container container = getContentPane();
+        JTextField jTextField = new JTextField("yuyan");
+        JTextField jTextField1 = new JTextField("lijin",20);
+        //布局
+        container.add(jTextField,BorderLayout.NORTH);
+        container.add(jTextField1,BorderLayout.SOUTH);
+        setVisible(true);
+        setBounds(100,100,300,300);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    }
+    public static void main(String[] args) {
+        new TestText1();
+    }
+}
+```
+
+
+
+Passwordfield
+
+```java
+package com.lijin.demo06;
+import javax.swing.*;
+import java.awt.*;
+//密码框
+public class TestText2 extends JFrame {
+    public TestText2() {
+        Container container = getContentPane();
+        JPasswordField jPasswordField = new JPasswordField();   //有默认值，但也可以设置
+        //jPasswordField.setEchoChar('+');
+        container.add(jPasswordField);
+        setVisible(true);
+        setBounds(100,100,300,300);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    }
+    public static void main(String[] args) {
+        new TestText2();
+    }
+}
+```
+
+
+
+### 4, Snake
+
+Frame
+
+keyboard listener
+
+timer
+
+
+
+
+
+
+
+### Questions:
+
+#### 1, Frame and Panel Diff?
+
+- Panel is an internal region to a frame or another panel that helps to group multiple components together 
+- a Frame is a resizable, movable independent window with a title bar which contains all other components.
+
+https://blog.csdn.net/weixin_38719347/article/details/72794404
+
+
+
+
+
+
 
 
 
