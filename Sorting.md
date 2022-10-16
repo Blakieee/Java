@@ -35,6 +35,8 @@ class Solution {
 
 
 
+
+
 ## Selection Sort
 ### Complexity
 
@@ -131,6 +133,8 @@ arr[] = 64 25 12 22 11
 
 
 
+
+
 ## Insertion Sort
 
 ​	like playing poke:
@@ -202,6 +206,9 @@ public static void main(String[] args)
 ### Example
 
 ![insertion sort](/Users/blake/Desktop/JavaNotes/Java/pictures/insertionsort.png)
+
+
+
 
 
 ## Merge Sort
@@ -382,13 +389,17 @@ public static int merge(int[] arr, int left, int mid, int right) {
 
 
 
+
+
 ## Quick Sort
 
 
 
 ### Complexity
 
-**n**log(**n**)
+Time: **n**log(**n**)
+
+Space: O(logn) - O(n)
 
 
 
@@ -483,6 +494,8 @@ class GFG {
 
 ==// This code is contributed by Ayush Choudhary
 ```
+
+
 
 
 
